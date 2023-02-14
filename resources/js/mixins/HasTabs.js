@@ -110,8 +110,15 @@ export default {
     }
 
     if (this.tabMode === 'form') {
+      let firstTabSlugWithErrors = null;
       this.$watch('validationErrors', (newErrors) => {
         if (newErrors.errors) {
+          
+          // Here i set the current tab to the first one with errors
+          firstTabSlugWithErrors = this.getNestedObject(this.fields, 'attribute', Object.entries(newErrors.errors)[0][0]).tabSlug;
+          this.handleTabClick(tabs[firstTabSlugWithErrors]);
+
+
           Object.entries(newErrors.errors).forEach(error => {
             if (error[0] && this.fields.find(x => x.attribute === error[0])) {
               let field = this.getNestedObject(this.fields, 'attribute', error[0]);
@@ -120,9 +127,17 @@ export default {
               let removeClasses = ['tabs-text-gray-600', 'hover:tabs-text-gray-800', 'dark:tabs-text-gray-400', 'hover:dark:tabs-text-gray-200']
               this.$refs[slug][0].classList.add(...addClasses)
               this.$refs[slug][0].classList.remove(...removeClasses)
+              console.log(error);
             }
           });
+          
+          
+        }else{
+          // Here we 
+          console.log("we don't have no errors we should go to the next tab.");
+          
         }
+
       })
     }
   },
@@ -181,7 +196,6 @@ export default {
      */
     handleTabClick(tab, updateUri = true, refreshCodeMirror = true) {
       this.selectedTab = tab;
-
       Nova.$emit('nova-tabs-changed', this.getTabsReference(), tab)
 
       if (updateUri) {

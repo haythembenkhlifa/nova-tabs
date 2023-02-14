@@ -7,7 +7,7 @@
         <p
           v-if="panel.helpText"
           :class="panel.helpText ? 'tabs-mt-2' : 'tabs-mt-3'"
-          class="tabs-text-gray-500 tabs-text-sm tabs-font-semibold tabs-italic"
+          class="tabs-text-gray-500 tabs-text-sm tabs-font-semibold tabs-italic tabs-bottom-8"
           v-html="panel.helpText"
         ></p>
       </slot>
@@ -19,6 +19,7 @@
       >
         <div id="tabs">
           <div class="block">
+            <!-- <hr class="tabs-rounded-sm tabs-border-t-4 tabs-border-t-emerald-500 tabs-w-2/3"> -->
             <nav
               aria-label="Tabs"
               class="tab-menu"
@@ -29,7 +30,7 @@
                 :class="getIsTabCurrent(tab) ? 'active tabs-text-' + getCurrentColor() + '-500 tabs-font-bold tabs-border-b-2 tabs-border-b-' + getCurrentColor() + '-500' : 'tabs-text-gray-600 hover:tabs-text-gray-800 dark:tabs-text-gray-400 hover:dark:tabs-text-gray-200'"
                 :dusk="tab.slug + '-tab'"
                 :ref="tab.slug + '-tab'"
-                class="tab-item border-gray-200"
+                class="tab-item border-gray-200 "
                 @click.prevent="handleTabClick(tab)"
               >
                 <span class="capitalize">{{ tab.properties.title }}</span>
@@ -114,5 +115,26 @@ export default {
   data: () => ({
     tabMode: 'form',
   }),
+  // mounted(){
+  //   Nova.$once('resource-updated',() => this.goToNextTab());
+  // },
+  // unmounted(){
+  //   Nova.$off('resource-updated', () => {
+  //     console.log('resource-updated OFF');
+  //   });
+  // },
+  // methods:{
+  //   goToNextTab(){
+  //     const x = this;
+  //     console.log('Current Tab');
+  //     console.log(x.tabs);
+      
+  //     console.log('Tabs');
+  //     console(x.selectedTab);
+
+  //     // let selectedTabIndex = tabs.findIndex((tab)=> tab == this.selectedTab);
+  //     // console("selected tab index : "+selectedTabIndex);
+  //   }
+  // }
 };
 </script>
